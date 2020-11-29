@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<!--<div>
+<div class="col-md-8 offset-md-3">-->
+<h1>Makaleler</h1>
+<br>
+<form   class="form-inline md-form  mb-4">
+{% csrf_token %}
+  <input class="form-control mr-sm-2" name="keyword" type="text" placeholder="Makale Ara..." aria-label="Search">
+  <button class="btn btn-outline-warning btn-rounded  my-0" type="submit">Ara</button>
+</form>
+
+
+{% if articles %}
+{% for article in articles %}
+
+    
+
+     
+    <div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+
+        <!-- Title -->
+        <a href="{%url 'article:article' article.id %}"><h1 class="mt-4">{{article.title}}</h1></a>
+
+        <!-- Author -->
+        <p class="lead">
+          by
+          <a >{{article.author}}</a>
+        </p>
+
+        <hr>
+
+        <!-- Date/Time -->
+        <p>Posted on {{article.created_dated}}</p>
+
+        <hr>
+
+       {% if article.article_image %}
+
+      <a href="/articles/article/{{article.id}}""> <img class="img-fluid rounded" src="{{article.article_image.url}}" alt=""></a>
+
+       {% endif %}
+        
+
+
+        <!-- Post Content -->
+        
+        <p class="lead">{{article.content|safe|truncatewords:50 }} <a href="/articles/article/{{article.id}}" >Devamını oku</a></p>
+          
+
+        <hr>
+
+        
+
+</div>
+
+        
+
+    </div>
+{% endfor %}
+{% else %}
+<div class="alert alert-danger">Yüklü Makale Bulunmamaktadır</div>
+{% endif %}
+
+
+
+
+
+
+{% endblock %}
